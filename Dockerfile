@@ -1,16 +1,11 @@
-# https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /source
-
-# copy csproj and restore as distinct layers
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -c release -o /app --no-restore
-RUN ls /app
 
 FROM build AS publish
 RUN dotnet publish  -c Release -o /app/publish
-RUN ls /app/publish/wwwroot/
 
 FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
