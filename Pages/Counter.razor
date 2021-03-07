@@ -1,0 +1,70 @@
+@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<Button Type="primary">Primary</Button>
+<Rate AllowClear="true" Value=@stars> </Rate>
+<Rate AllowClear="true" Value=@stars> </Rate>
+<div>
+    <div @onclick="TestClick">
+        Presets:
+    </div>
+    <div @onclick="TestClick2">dddd</div>
+    <br />
+    <div>
+        <button @onclick="TestClick"> jjjj</button>
+        <Tag Color="magenta">magenta</Tag>
+        <Tag Color="pink">pink</Tag>
+        <Tag Color="red">red</Tag>
+        <Tag Color="volcano">volcano</Tag>
+        <Tag Color="orange">orange</Tag>
+        <Tag Color="green">green</Tag>
+        <Tag Color="cyan">cyan</Tag>
+        <Tag Color="blue">blue</Tag>
+        <Tag Color="lime">lime</Tag>
+        <Tag Color="geekblue">geekblue</Tag>
+        <Tag Color="purple">purple</Tag>
+    </div>
+    <br />
+    <div>
+        Inverse:
+    </div>
+    <br />
+    <div>
+        <Tag Icon="taobao" Color="blue-inverse">blue-inverse</Tag>
+        <Tag Color="orange-inverse">orange-inverse</Tag>
+        <Tag Icon="skype" Color="red-inverse">red-inverse</Tag>
+        <Tag Icon="weibo" Color="purple-inverse">purple-inverse</Tag>
+    </div>
+    <br />
+    <div>
+        Customs:
+    </div>
+    <br />
+    <div>
+        To Do
+    </div>
+</div>
+@code { private int currentCount = 0;
+    private int stars;
+
+    private void IncrementCount()
+    {
+
+        currentCount++;
+        stars = currentCount;
+    }
+
+    private void TestClick(MouseEventArgs arg)
+    {
+        stars = 0;
+
+    }
+    private void TestClick2(MouseEventArgs arg)
+    {
+        Console.WriteLine(arg.AltKey.ToString(), arg.Button);
+    } }

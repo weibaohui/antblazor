@@ -1,0 +1,56 @@
+@page "/tables"
+<h3>tables</h3>
+@using antblazor.module
+@using AntDesign.TableModels
+@inject HttpClient Http
+
+<Table TItem="WeatherForecast" Bordered=@true DataSource="@forecasts" OnRowClick="OnRowClickForecast">
+    <Column @bind-Field="@context.Summary">
+        <a>@context.Summary</a>
+    </Column>
+    <Column @bind-Field="@context.TemperatureC"></Column>
+    <Column @bind-Field="@context.Summary2">
+        <TitleTemplate>
+            <span> <Icon Type="environment"/> Address </span>
+        </TitleTemplate>
+    </Column>
+    <Column @bind-Field="@context.Summary2">
+        @foreach (var tag in context.Tags)
+        {
+            var color = tag.Length > 4 ? "geekblue" : "green";
+            if (tag == "loser")
+            {
+                color = "volcano";
+            }
+            <Tag Color="@color">@tag</Tag>
+        }
+    </Column>
+    <ActionColumn Title="Acton">
+        <Space Size="middle">
+            <SpaceItem>
+                <a>Invite @context.Summary</a>
+            </SpaceItem>
+            <SpaceItem>
+                <a>Delete</a>
+            </SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>
+
+@code{
+
+
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        forecasts.ForEach(k => k.fillData());
+    }
+
+    private void OnRowClickForecast(RowData<WeatherForecast> row)
+    {
+        Console.WriteLine($"row {row.Data.Summary} was clicked.");
+    }
+
+}
