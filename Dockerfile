@@ -10,11 +10,11 @@ RUN ls /app
 
 FROM build AS publish
 RUN dotnet publish  -c Release -o /app/publish
-RUN ls /app/publish
+RUN ls /app/publish/wwwroot/
 
 FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
-COPY --from=publish /app/publish/dist .
+COPY --from=publish /app/publish/wwwroot .
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN ls /usr/share/nginx/html
 
