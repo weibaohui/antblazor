@@ -29,10 +29,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: tmp
+        run: |
+          docker pull  mcr.microsoft.com/dotnet/sdk:5.0@sha256:0aabc099920afb17b14995cb0499b84116f1f4bee8f953f79cb
+          docker tag mcr.microsoft.com/dotnet/sdk:5.0 docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME:dotnet-sdk-m1-5
+          docker push docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME:dotnet-sdk-m1-5
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
-
+        run: |
+          docker build . --file Dockerfile --tag $IMAGE_NAME
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
