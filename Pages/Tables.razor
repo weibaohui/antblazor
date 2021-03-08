@@ -1,8 +1,7 @@
 @page "/tables"
 <h3>tables</h3>
 @using antblazor.module
-@using AntDesign.TableModels
-@inject HttpClient Http
+
 
 <Table TItem="WeatherForecast" Bordered=@true DataSource="@forecasts" OnRowClick="OnRowClickForecast">
     <Column @bind-Field="@context.Summary">
@@ -36,21 +35,3 @@
         </Space>
     </ActionColumn>
 </Table>
-
-@code{
-
-
-    private WeatherForecast[] forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-        forecasts.ForEach(k => k.fillData());
-    }
-
-    private void OnRowClickForecast(RowData<WeatherForecast> row)
-    {
-        Console.WriteLine($"row {row.Data.Summary} was clicked.");
-    }
-
-}
